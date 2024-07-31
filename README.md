@@ -23,6 +23,7 @@
     - In the third terminal, run:
         ```bash
         git checkout -b lecture
+        cd frontend
         npm run sync
         ```
 

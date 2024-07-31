@@ -11,8 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import apiClient from "@/lib/zodios/apiClient";
-import { isErrorFromAlias } from "@zodios/core";
+// import our apiClient and isErrorFromAlias
+
 
 export default function SignUpForm({ setUser }: { setUser: (username: string) => void}) {
   const [email, setEmail] = useState("");
@@ -24,37 +24,20 @@ export default function SignUpForm({ setUser }: { setUser: (username: string) =>
     evt.preventDefault();
 
     // EXAMPLE [2.iii] - call zodios client and handle errors
-    try {
-      const res = await apiClient.createUser({
-        username,
-        email,
-        password,
-      });
+
+    const res = await (await fetch("http://localhost:1234/api/users", {
+      method: "POST",
+      body: JSON.stringify({ username, email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })).json();
+    if (res.message) {
+      setError(res.message);
+    } else if (res.username) {
       // Mock login after account creation
       setUser(res.username);
-    } catch (error) {
-      // BUG: something weird is happening with isErrorFromAlias and isErrorFromPath,
-      // they both return type never but still otherwise work
-      if (isErrorFromAlias(apiClient.api, "createUser", error)) {
-        console.log("isErrorFromAlias")
-        const err: { response: { data: { message: string }}} = error; // Hack to work around never bug
-        setError(err.response.data.message);
-      }
     }
-
-    // const res = await (await fetch("http://localhost:1234/api/users", {
-    //   method: "POST",
-    //   body: JSON.stringify({ username, email, password }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })).json();
-    // if (res.message) {
-    //   setError(res.message);
-    // } else if (res.username) {
-    //   // Mock login after account creation
-    //   setUser(res.username);
-    // }
   }
 
   return (
