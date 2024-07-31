@@ -9,7 +9,7 @@
     2. Zod example code
         1. Schema and inferred type
         2. Backend - request body validation
-        3. Frontend - Form validation
+        3. Frontend - Form validation (example [in this post](https://stackademic.com/blog/form-validation-with-zod) but it's probably better to use a form library)
 2. [Zodios](https://www.zodios.org/docs/intro)
     1. Zodios is an Axios wrapper that uses Zod and lets you make *type-safe* REST requests.
         1. You define endpoints with provided functions and classes, describing their methods, paths, parameters (body/queries/header/path params), responses, and errors with Zod schemas.
