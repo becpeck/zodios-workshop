@@ -4,22 +4,18 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- CreateTable
 CREATE TABLE "Workout" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "userId" INTEGER NOT NULL,
+    "username" TEXT NOT NULL,
     "type" TEXT NOT NULL,
-    "date" DATETIME NOT NULL,
     "duration" INTEGER NOT NULL,
     "notes" TEXT,
-    "private" BOOLEAN NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
-    CONSTRAINT "Workout_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
+    "loggedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Workout_username_fkey" FOREIGN KEY ("username") REFERENCES "User" ("username") ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT "Workout_type_fkey" FOREIGN KEY ("type") REFERENCES "WorkoutType" ("type") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 

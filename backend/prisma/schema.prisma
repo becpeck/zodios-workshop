@@ -17,24 +17,20 @@ model User {
   password   String
 
   createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
   
   workouts   Workout[]
 }
 
 model Workout {
   id           Int          @id @default(autoincrement())
-  userId       Int
+  username     String
   type         String
-  date         DateTime
   duration     Int
   notes        String?
-  private      Boolean
 
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  loggedAt     DateTime     @default(now())
 
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user         User         @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
   workoutType  WorkoutType  @relation(fields: [type], references: [type], onDelete: Restrict, onUpdate: Cascade)
 }
 

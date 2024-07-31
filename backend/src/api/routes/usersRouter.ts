@@ -18,6 +18,7 @@ const newUserSchema = z.object({
 });
 
 router.post("/", async (req: Request, res: Response) => {
+    console.log(req.body)
     try {
         const parsed = newUserSchema.safeParse(req.body);
         if (!parsed.success) {
@@ -31,7 +32,6 @@ router.post("/", async (req: Request, res: Response) => {
                     email: true,
                     username: true,
                     createdAt: true,
-                    updatedAt: true,
                 },
             });
             res.status(201).json(user);

@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
