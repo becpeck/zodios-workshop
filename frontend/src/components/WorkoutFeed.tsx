@@ -27,7 +27,7 @@ export default function WorkoutFeed() {
           type={workout.type}
           duration={workout.duration}
           notes={workout.notes}
-          loggedAt={workout.loggedAt}
+          loggedAt={new Date(workout.loggedAt)}
         />
       )}
     </div>
