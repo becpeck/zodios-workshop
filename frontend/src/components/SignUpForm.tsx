@@ -11,8 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-// import our apiClient and isErrorFromAlias
-
+import apiClient from "@/lib/zodios/apiClient";
+import { isErrorFromAlias } from "@zodios/core";
 
 export default function SignUpForm({ setUser }: { setUser: (username: string) => void}) {
   const [email, setEmail] = useState("");
@@ -24,20 +24,39 @@ export default function SignUpForm({ setUser }: { setUser: (username: string) =>
     evt.preventDefault();
 
     // EXAMPLE [2.iii] - call zodios client and handle errors
-
-    const res = await (await fetch("http://localhost:1234/api/users", {
-      method: "POST",
-      body: JSON.stringify({ username, email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })).json();
-    if (res.message) {
-      setError(res.message);
-    } else if (res.username) {
+    try {
+      const res = await apiClient.createUser({
+        username,
+        email,
+        password,
+      });
       // Mock login after account creation
       setUser(res.username);
+    } catch (error) {
+      // BUG: something weird is happening with isErrorFromAlias and isErrorFromPath,
+      // they both return type never but still otherwise work
+      // I'm pretty sure this is due to vite's weird ts.config structure, I have two other repos with the same versions
+      // of zod and zodios and everything works in those. They weren't made with create vite
+      if (isErrorFromAlias(apiClient.api, "createUser", error)) {
+        console.log("isErrorFromAlias")
+        const err: { response: { data: { message: string }}} = error; // Hack to work around never bug
+        setError(err.response.data.message);
+      }
     }
+
+    // const res = await (await fetch("http://localhost:1234/api/users", {
+    //   method: "POST",
+    //   body: JSON.stringify({ username, email, password }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })).json();
+    // if (res.message) {
+    //   setError(res.message);
+    // } else if (res.username) {
+    //   // Mock login after account creation
+    //   setUser(res.username);
+    // }
   }
 
   return (
