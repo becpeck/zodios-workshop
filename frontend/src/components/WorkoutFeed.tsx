@@ -5,6 +5,7 @@ export default function WorkoutFeed() {
   const [workouts, setWorkouts] = useState<WorkoutCardProps[]>([]);
 
   useEffect(() => {
+    // TODO: replace with zodios
     fetch("http://localhost:1234/api/workouts", {
       method: "GET",
     })
@@ -14,7 +15,7 @@ export default function WorkoutFeed() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="grid grid-cols-2 gap-2">
       {workouts.map(workout => 
         <WorkoutCard
           id={workout.id}

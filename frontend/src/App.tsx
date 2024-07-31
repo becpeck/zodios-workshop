@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SignUpForm from "./components/SignUpForm";
 import WorkoutFeed from "./components/WorkoutFeed";
+import LogWorkoutForm from "./components/LogWorkoutForm";
 
 function App() {
   const [user, setUser] = useState("");
@@ -22,15 +23,15 @@ function App() {
         <TabsContent value="signup">
           <SignUpForm setUser={(username: string) => setUser(username)}/>
         </TabsContent>
-        <TabsContent value="feed">
+        <TabsContent value="feed" className="w-[60%]">
           <WorkoutFeed />
         </TabsContent>
-        <TabsContent value="workout">
-          
+        <TabsContent value="workout" className="">
+          <LogWorkoutForm username={user}/>
         </TabsContent>
       </Tabs>
     </main>
-  )
+  );
 }
 
-export default App
+export default App;
