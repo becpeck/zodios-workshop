@@ -4,7 +4,7 @@ import { z } from "zod";
 // EXAMPLE [2.ii.a.a] - getWorkouts
 const getWorkouts = makeEndpoint({
     method: "get",
-    path: "/api/workouts",
+    path: "",
     alias: "getWorkouts",
     response: z.array(z.object({
         id: z.number(),
