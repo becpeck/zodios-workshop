@@ -6,7 +6,9 @@
 - Clone the repository and open three terminals in your editor.
     - In the first terminal, run:
         ```bash
+        git checkout -b lecture
         cd backend
+        cp .env.template .env
         npm i
         npx prisma migrate dev --name init
         npm run dev
@@ -21,12 +23,11 @@
 
     - In the third terminal, run:
         ```bash
-        git checkout -b lecture
         cd frontend
         npm run sync
         ```
 
-- You can run `npm run sync` in the third terminal anytime, this will update your local code to match the last commit of code we work on together.
+- You can run `npm run sync` in the third terminal anytime (as long as you are in `/frontend`), this will update your local code to match the last commit of code we work on together.
 - Below are notes and documentation for the backend endpoints we will use.
 
 
