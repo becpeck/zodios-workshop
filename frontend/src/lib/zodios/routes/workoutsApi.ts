@@ -24,6 +24,13 @@ const getWorkouts = makeEndpoint({
 })
 
 // EXAMPLE [2.ii.a.b] - createWorkout
+const createWorkout = makeEndpoint({
+    method: "post",
+    path: "",
+    alias: "createWorkout",
+    parameters: parametersBuilder()
+        .
+})
 
 // Build and export our workoutsApi
 const workoutsApi = apiBuilder()
