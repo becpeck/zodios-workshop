@@ -14,7 +14,7 @@ const newUserSchema = z.object({
         .refine((val) => /[A-Z]/.test(val), { message: "Password must contain an uppercase letter"})
         .refine((val) => /[a-z]/.test(val), { message: "Password must contain a lowercase letter"})
         .refine((val) => /[0-9]/.test(val), { message: "Password must contain a number"})
-        .refine((val) => /[!@#\$%\^&*\(\)]/.test(val), { message: "Password must contain one special character: !@#$%^&*()"})
+        .refine((val) => /[!@#\$%\^&*\(\)]/.test(val), { message: "Password must contain one special character: !@#$%^&*()"}),
 });
 
 router.post("/", async (req: Request, res: Response) => {
@@ -37,12 +37,11 @@ router.post("/", async (req: Request, res: Response) => {
             res.status(201).json(user);
         }
     } catch (err) {
-        if (err instanceof Prisma.PrismaClientKnownRequestError) {
-            if (err.code === "P2002") {
-                res.status(400).json({ message: "Email already has an account or username already in use"})
-            }
+        if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002") {
+            res.status(400).json({ message: "Email already has an account or username already in use"});
+        } else {
+            res.status(500).json({ message: "Unknown error" });
         }
-        res.status(500).json({ message: "Unknown error" });
     }
 });
 

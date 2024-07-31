@@ -15,10 +15,26 @@ export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    // validate form
+    // TODO: validate form with zod
+
+    const res = await (await fetch("http://localhost:1234/api/users", {
+      method: "POST",
+      body: JSON.stringify({ username, email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })).json();
+    
+    if (res.message) {
+      setError(res.message);
+    } else if (res.username) {
+      // Mock login after account creation
+      window.localStorage.setItem("username", res.username);
+    }
   }
 
   return (
@@ -45,8 +61,9 @@ export default function SignUpForm() {
           </div>
         </form>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-col gap-2 justify-start">
         <Button className="w-full" type="submit" form="signup">Sign Up</Button>
+        <div className="text-red-500">{error}</div>
       </CardFooter>
     </Card>
   );
