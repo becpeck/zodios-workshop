@@ -13,7 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 
 // import our apiClient
-
+import apiClient from "@/lib/zodios/apiClient";
 
 export default function LogWorkoutForm({ username }: { username: string }) {
   const [ duration, setDuration ] = useState(20);
@@ -32,19 +32,26 @@ export default function LogWorkoutForm({ username }: { username: string }) {
     evt.preventDefault();
     
     // EXAMPLE [2.iii] - call zodios client
+    await apiClient.createWorkout({
+      username: username || "test",
+      type,
+      duration,
+      notes
+    }, { headers: { Authorization: `Bearer ${'token'}`} });
 
-    await (await fetch("http://localhost:1234/api/workouts", {
-      method: "POST",
-      body: JSON.stringify({
-        username: username || "test",
-        duration,
-        type,
-        notes,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })).json();
+
+    // await (await fetch("http://localhost:1234/api/workouts", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     username: username || "test",
+    //     duration,
+    //     type,
+    //     notes,
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })).json();
     
     clearForm();
   }
