@@ -1,5 +1,39 @@
 # Zod and Zodios Workshop
 
+
+## Setup
+
+- Clone the repository and open three terminals in your editor.
+    - In the first terminal, run:
+        ```bash
+        cd backend
+        npm i
+        npx prisma migrate dev --name init
+        npx prisma db seed
+        npm run dev
+        ```
+
+    - In the second terminal, run:
+        ```bash
+        cd frontend
+        npm i
+        npm run dev
+        ```
+
+    - In the third terminal, run:
+        ```bash
+        git checkout -b lecture
+        npm run sync
+        ```
+
+- You can run `npm run sync` in the third terminal anytime, this will update your local code to match the last commit of code we work on together.
+- Below are notes and documentation for the backend endpoints we will use.
+
+
+## Notes
+
+> These notes are full of links to documentation and other resources. There are also labels formatted like `EXAMPLE [x.x.x]`, which connect the bullet point label to a comment in the codebase. To find the spot in the codebase that corresponds to that step, search for the label in your editor.
+
 1. [Zod](https://zod.dev/)
     1. What is Zod?
         1. Zod is a validation library. It allows you to define a "schema", which describes the shape and types of an object or variable
