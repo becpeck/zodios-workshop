@@ -29,7 +29,22 @@ const createWorkout = makeEndpoint({
     path: "",
     alias: "createWorkout",
     parameters: parametersBuilder()
-        .
+        .addBody(z.object({
+            username: z.string(),
+            duration: z.number(),
+            type: z.string(),
+            notes: z.string().optional(),
+        }))
+        .build(),
+    response: z.object({
+
+    }),
+    errors: makeErrors([{
+        status: 400,
+        schema: z.object({
+            message: z.string(),
+        }),
+    }]),
 })
 
 // Build and export our workoutsApi
