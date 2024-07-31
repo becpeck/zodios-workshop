@@ -1,5 +1,6 @@
 import { mergeApis, Zodios } from "@zodios/core";
 import workoutsApi from "./routes/workoutsApi";
+import { pluginToken } from "@zodios/plugins";
 
 const API_BASE_URL = "http://localhost:1234/api";
 
@@ -17,6 +18,11 @@ const api = mergeApis({
 const apiClient = new Zodios(API_BASE_URL, api);
 
 // Add plugins
+
+// This plugin attaches bearer token headers to every endpoint
+apiClient.use(pluginToken({
+    getToken: async () => "token",
+}));
 
 // Export the apiClient
 export default apiClient;
