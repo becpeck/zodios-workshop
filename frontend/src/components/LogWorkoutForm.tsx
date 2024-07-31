@@ -12,6 +12,8 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 
+import apiClient from "@/lib/zodios/apiClient";
+
 export default function LogWorkoutForm({ username }: { username: string }) {
   const [ duration, setDuration ] = useState(20);
   const [ type, setType ] = useState("run");
@@ -28,20 +30,27 @@ export default function LogWorkoutForm({ username }: { username: string }) {
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     
-    // TODO: replace with zodios
-    await (await fetch("http://localhost:1234/api/workouts", {
-      method: "POST",
-      body: JSON.stringify({
-        username: username || "test",
-        duration,
-        type,
-        notes,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })).json();
+    // EXAMPLE [2.iii] - call zodios client
+    await apiClient.createWorkout({
+      username: username || "test",
+      duration,
+      type,
+      notes,
+    });
 
+    // await (await fetch("http://localhost:1234/api/workouts", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     username: username || "test",
+    //     duration,
+    //     type,
+    //     notes,
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })).json();
+    
     clearForm();
   }
 
