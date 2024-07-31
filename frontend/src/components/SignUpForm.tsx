@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function SignUpForm() {
+export default function SignUpForm({ setUser }: { setUser: (username: string) => void}) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,17 +28,17 @@ export default function SignUpForm() {
         "Content-Type": "application/json",
       },
     })).json();
-    
+
     if (res.message) {
       setError(res.message);
     } else if (res.username) {
       // Mock login after account creation
-      window.localStorage.setItem("username", res.username);
+      setUser(res.username);
     }
   }
 
   return (
-    <Card className="w-[30%]">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Sign Up</CardTitle>
         <CardDescription>Sign up to start tracking and sharing your workouts!</CardDescription>
