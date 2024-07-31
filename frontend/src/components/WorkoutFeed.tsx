@@ -2,20 +2,23 @@ import { useState, useEffect } from "react";
 import WorkoutCard, { type WorkoutCardProps } from "./WorkoutCard";
 
 // import our apiClient
-
+import apiClient from "@/lib/zodios/apiClient";
 
 export default function WorkoutFeed() {
   const [workouts, setWorkouts] = useState<WorkoutCardProps[]>([]);
 
   useEffect(() => {
     // EXAMPLE [2.iii] - call zodios client
-
-    fetch("http://localhost:1234/api/workouts", {
-      method: "GET",
-    })
-      .then(res => res.json())
+    apiClient.getWorkouts({ headers: { Authorization: `Bearer ${'token'}` }})
       .then(data => setWorkouts(data))
       .catch(err => console.error(err));
+
+    // fetch("http://localhost:1234/api/workouts", {
+    //   method: "GET",
+    // })
+    //   .then(res => res.json())
+    //   .then(data => setWorkouts(data))
+    //   .catch(err => console.error(err));
   }, []);
 
   return (
