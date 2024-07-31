@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 import WorkoutCard, { type WorkoutCardProps } from "./WorkoutCard";
 
+// import our apiClient
+
+
 export default function WorkoutFeed() {
   const [workouts, setWorkouts] = useState<WorkoutCardProps[]>([]);
 
   useEffect(() => {
-    // TODO: replace with zodios
+    // EXAMPLE [2.iii] - call zodios client
+
     fetch("http://localhost:1234/api/workouts", {
       method: "GET",
     })
-    .then(res => res.json())
-    .then(data => setWorkouts(data))
-    .catch(err => console.error(err))
+      .then(res => res.json())
+      .then(data => setWorkouts(data))
+      .catch(err => console.error(err));
   }, []);
 
   return (
@@ -23,7 +27,7 @@ export default function WorkoutFeed() {
           type={workout.type}
           duration={workout.duration}
           notes={workout.notes}
-          loggedAt={new Date(workout.loggedAt)}
+          loggedAt={workout.loggedAt}
         />
       )}
     </div>

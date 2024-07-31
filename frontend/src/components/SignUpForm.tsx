@@ -11,6 +11,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+// import our apiClient and isErrorFromAlias
+
+
 export default function SignUpForm({ setUser }: { setUser: (username: string) => void}) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -19,7 +22,8 @@ export default function SignUpForm({ setUser }: { setUser: (username: string) =>
 
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    // TODO: validate form with zod
+
+    // EXAMPLE [2.iii] - call zodios client and handle errors
 
     const res = await (await fetch("http://localhost:1234/api/users", {
       method: "POST",
@@ -28,7 +32,6 @@ export default function SignUpForm({ setUser }: { setUser: (username: string) =>
         "Content-Type": "application/json",
       },
     })).json();
-
     if (res.message) {
       setError(res.message);
     } else if (res.username) {

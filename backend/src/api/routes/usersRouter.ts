@@ -6,6 +6,7 @@ import db from "../db";
 
 const router = express.Router();
 
+// EXAMPLE [1.ii.a]: Zod schema with refinements and custom messages
 const newUserSchema = z.object({
     username: z.string().min(1, "Username cannot be empty"),
     email: z.string().email().min(1, "Email cannot be empty"),
@@ -18,7 +19,6 @@ const newUserSchema = z.object({
 });
 
 router.post("/", async (req: Request, res: Response) => {
-    console.log(req.body)
     try {
         const parsed = newUserSchema.safeParse(req.body);
         if (!parsed.success) {
