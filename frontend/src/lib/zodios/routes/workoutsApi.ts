@@ -11,12 +11,23 @@ const getWorkouts = makeEndpoint({
         username: z.string(),
         type: z.string(),
         duration: z.number(),
-        // notes: z.string().or(z.null())
+        // notes: z.string().or(z.null())  // alternative to below
         notes: z.string().nullable(),
-        loggedAt: z.string(),
+        loggedAt: z.string().transform((str) => new Date(str)),
     })),
+    errors: makeErrors([{
+        status: 400,
+        schema: z.object({
+            message: z.string(),
+        }),
+    }]),
 })
 
 // EXAMPLE [2.ii.a.b] - createWorkout
 
 // Build and export our workoutsApi
+const workoutsApi = apiBuilder()
+    .addEndpoint(getWorkouts)
+    .build();
+
+export default workoutsApi;
